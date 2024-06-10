@@ -7,60 +7,60 @@ import java.io.IOException;
 
 import org.json.simple.JSONObject; //MANEJO DE OBJETOS
 
-public class GrupoD_Fiesta extends GrupoD_Evento {
+public class GrupoD_Party extends GrupoD_Event {
 	protected JSONObject fiestaJSON;
-	protected String tipo, paquete;
+	protected String type, packageName;
 	private String lineReader;
 	private int opMenu;
 
-	public GrupoD_Fiesta(int dia, int mes, int anio, String lugar, String tipo, String nombreEvento, int opMenu,
-			String paquete) {
-		super(dia, mes, anio, lugar, nombreEvento);
-		this.tipo = tipo;
-		this.paquete = paquete;
+	public GrupoD_Party(int day, int month, int year, String place, String type, String eventName, int opMenu,
+			String packageName) {
+		super(day, month, year, place, eventName);
+		this.type = type;
+		this.packageName = packageName;
 		this.opMenu = opMenu;
 		fiestaJSON = new JSONObject();
 		lineReader = "";
 	}
 
 	public void agregarFiesta() {
-		nombreEvento = "fiesta";
-		pedirDatosEvento();
+		eventName = "fiesta";
+		requestEventData();
 
 		System.out.print("Ingrese el tipo de la fiesta: ");
-		tipo = scanner.nextLine();
+		type = scanner.nextLine();
 		do {
-			System.out.println("¿Desea comprar un paquete para el concierto? (Si/No)");
-			paquete = scanner.nextLine().trim().toLowerCase(); // ELIMINAR ESPACIOS EN BLANCO Y CONVERTIR EN MINUSCULA
-		} while (!paquete.equals("si") && !paquete.equals("no"));
-		if (paquete.equalsIgnoreCase("si")) {
-			seleccionarPaquete();
+			System.out.println("¿Desea comprar un paquete para la fiesta? (Si/No)");
+			packageName = scanner.nextLine().trim().toLowerCase(); // ELIMINAR ESPACIOS EN BLANCO Y CONVERTIR EN MINUSCULA
+		} while (!packageName.equals("si") && !packageName.equals("no"));
+		if (packageName.equalsIgnoreCase("si")) {
+			selectpackageName();
 		} else {
-			paquete = "NINGUNO";
+			packageName = "NINGUNO";
 		}
-		cliente = "";
-		for (int i = 0; i < listaPersonas.size(); i++) {
-			cliente += listaPersonas.get(i);
+		client = "";
+		for (int i = 0; i < listPeople.size(); i++) {
+			client += listPeople.get(i);
 			// EN EL ÚLTIMO ÍNDICE YA NO AÑADE ","
-			if (i != listaPersonas.size() - 1) {
-				cliente += ", ";
+			if (i != listPeople.size() - 1) {
+				client += ", ";
 			}
 		}
 		System.out.println("***************************");
 		System.out.println("LOS DATOS DE LA FIESTA SON:");
-		System.out.println("Cliente/s: " + cliente);
-		System.out.println("Tipo de fiesta: " + tipo);
-		System.out.println("Lugar de la fiesta: " + lugar);
-		System.out.println("Fecha de la fiesta: " + dia + "/" + mes + "/" + anio);
-		guardarDatos();
+		System.out.println("Cliente/s: " + client);
+		System.out.println("Tipo de fiesta: " + type);
+		System.out.println("Lugar de la fiesta: " + place);
+		System.out.println("Fecha de la fiesta: " + day + "/" + month + "/" + year);
+		saveData();
 		System.out.println("***************************");
 		System.out.println("LECTURA Fiesta.JSON");
-		leerDatos();
+		readData();
 		System.out.println("***************************");
 	}
 
 	@Override
-	public void seleccionarPaquete() {
+	public void selectpackageName() {
 		do {
 			System.out.println("ELIJA ALGUNA OPCIÓN");
 			System.out.println("[1] PAQUETE ECONÓMICO ($10)");
@@ -73,8 +73,8 @@ public class GrupoD_Fiesta extends GrupoD_Evento {
 				System.out.println("Has elegido paquete económico. Incluye:");
 				System.out.println("Acceso a la pista de baile");
 				System.out.println("1 bebida gratis");
-				System.out.println("Acceso a una mesa compartida");
-				paquete = "económico";
+				System.out.println("Acceso a una montha compartida");
+				packageName = "económico";
 				opMenu = 4;
 				break;
 			case 2:
@@ -82,15 +82,15 @@ public class GrupoD_Fiesta extends GrupoD_Evento {
 				System.out.println("Acceso prioritario a actividades familiares");
 				System.out.println("Asientos juntos");
 				System.out.println("4 bebidas sin alcohol gratis");
-				paquete = "familiar";
+				packageName = "familiar";
 				opMenu = 4;
 				break;
 			case 3:
 				System.out.println("Has elegido paquete vip. Incluye:");
 				System.out.println("Fotos con el anfitrión o celebridad de la fiesta");
-				System.out.println("Servicio de mesero exclusivo");
+				System.out.println("Servicio de monthero exclusivo");
 				System.out.println("Acceso a aperitivo exclusivos");
-				paquete = "VIP";
+				packageName = "VIP";
 				opMenu = 4;
 				break;
 			case 4:
@@ -103,26 +103,27 @@ public class GrupoD_Fiesta extends GrupoD_Evento {
 	}
 
 	@Override
-	public void guardarDatos() {
+	public void saveData() {
 		// INICIALIZA JSON
 		fiestaJSON = new JSONObject();
 		// GUARDAR EN JSON
-		fiestaJSON.put("Dia", dia);
-		fiestaJSON.put("Mes", mes);
-		fiestaJSON.put("Año", anio);
-		fiestaJSON.put("Lugar", lugar);
-		fiestaJSON.put("Tipo", tipo);
-		fiestaJSON.put("Paquete", paquete);
+		fiestaJSON.put("Dia: ", day);
+		fiestaJSON.put("Mes: ", month);
+		fiestaJSON.put("Año: ", year);
+		fiestaJSON.put("Lugar: ", place);
+		fiestaJSON.put("Tipo: ", type);
+		fiestaJSON.put("Paquete: ", packageName);
 		// INICIAR CLIENTE VACIO
-		cliente = "";
-		for (int i = 0; i < listaPersonas.size(); i++) {
-			cliente += listaPersonas.get(i);
+		client = "";
+		// FOR
+		for (int i = 0; i < listPeople.size(); i++) {
+			client += listPeople.get(i);
 			// EN EL ÚLTIMO ÍNDICE YA NO AÑADE ","
-			if (i != listaPersonas.size() - 1) {
-				cliente += ", ";
+			if (i != listPeople.size() - 1) {
+				client += ", ";
 			}
 		}
-		fiestaJSON.put("Clientes", cliente);
+		fiestaJSON.put("clients", client);
 		// GUARDAR FIESTA EN ARCHIVO .JSON
 		try (FileWriter file = new FileWriter("Fiesta.json")) {
 			// ESCRITURA JSON
@@ -130,14 +131,14 @@ public class GrupoD_Fiesta extends GrupoD_Evento {
 			// LIMPIAR BUFFER ARCHIVO
 			file.flush();
 			System.out.println("Datos de la fiesta han sido guardados");
-		} catch (Exception e) { //
+		} catch (Exception e) { 
 			// IMPRIME ERRORES SI NO GUARDA EL ARCHIVO
 			System.out.println("El archivo no existe");
 		}
 	}
 
 	@Override
-	public void leerDatos() {
+	public void readData() {
 		try (BufferedReader leer = new BufferedReader(new FileReader("Fiesta.json"))) {
 			while ((lineReader = leer.readLine()) != null) {
 				System.out.println(lineReader);

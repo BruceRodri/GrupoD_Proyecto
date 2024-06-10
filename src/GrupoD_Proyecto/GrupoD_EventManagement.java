@@ -2,19 +2,19 @@ package GrupoD_Proyecto;
 
 import java.util.Scanner;
 
-public class GrupoD_GestionEvento {
+public class GrupoD_EventManagement {
 	// ATRIBUTOS
 	private Scanner scanner;
 	private int opMenu;
-	private GrupoD_Concierto concierto;
-	private GrupoD_Fiesta fiesta;
+	private GrupoD_Concert conciert;
+	private GrupoD_Party fiesta;
 
 	// CONSTRUCTOR
-	public GrupoD_GestionEvento(int opMenu) {
+	public GrupoD_EventManagement(int opMenu) {
 		this.opMenu = opMenu;
 		scanner = new Scanner(System.in);
-		concierto = new GrupoD_Concierto(0, 0, 0, "", "", "", "", 0);
-		fiesta = new GrupoD_Fiesta(0, 0, 0, "", "", "", 0, "");
+		conciert = new GrupoD_Concert(0, 0, 0, "", "", "", "", 0);
+		fiesta = new GrupoD_Party(0, 0, 0, "", "", "", 0, "");
 	}
 
 	public void ejecutarGestionEventos() {
@@ -31,7 +31,7 @@ public class GrupoD_GestionEvento {
 
 			switch (opMenu) {
 			case 1:
-				concierto.agregarConcierto();
+				conciert.addConcert();
 				break;
 
 			case 2:
